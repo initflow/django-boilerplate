@@ -1,0 +1,75 @@
+version: '2'
+services:
+  web:
+    restart: always
+    build: ./web
+    expose:
+      - "8000"
+    links:
+      - postgres:postgres
+#      - rabbitmq:rabbit
+      - redis:redis
+    volumes:
+      - ./web:/usr/src/app
+    env_file: .env
+    command: /usr/local/bin/gunicorn app.wsgi:application -w 2 -b :8000 --reload
+
+  nginx:
+    restart: always
+    build: ./nginx/
+    ports:
+      - "${NGINX_PORT}:80"
+    volumes:
+      - /www/static
+    env_file: .env
+    volumes_from:
+      - web
+    links:
+      - web:web
+
+  postgres:
+    restart: always
+    image: postgres:latest
+    hostname: postgres
+    volumes_from:
+      - data
+    ports:
+      - "5432:5432"
+
+
+  data:
+    restart: always
+    image: postgres:latest
+    volumes:
+      - /var/lib/postgresql
+    command: echo 'true'
+
+  redis:
+    image: redis:2.8.19
+    environment:
+      - USER_TOKEN_DB=1
+
+#  rabbitmq:
+#    image: rabbitmq:3
+#    env_file: .env
+#    ports:
+#      - 5672:5672
+
+
+  worker:
+    restart: always
+    build: ./web
+    command: sh /usr/src/app/run_celery_worker.sh
+    volumes:
+       - ./web:/usr/src/app
+    env_file: .env
+    links:
+      - postgres:postgres
+#      - rabbitmq:rabbit
+      - redis:redis
+
+
+
+
+
+
