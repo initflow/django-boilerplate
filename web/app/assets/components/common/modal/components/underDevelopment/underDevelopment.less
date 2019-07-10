@@ -1,0 +1,40 @@
+.c-modal-under-development {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    max-width: 660px;
+    width: 100vw;
+    padding: 36px 20px 28px;
+    &__title {
+        margin-bottom: 10px;
+
+        font-size: 2.4rem;
+        line-height: 3.6rem;
+        text-align: center;
+    }
+    &__hint {
+        max-width: 425px;
+
+        font-size: 1.3rem;
+        line-height: 2.6rem;
+        text-align: center;
+    }
+
+    @media @media-md-down {
+        max-width: none;
+        width: 100%;
+        padding-top: 42px;
+        padding-bottom: 22px;
+        &__title {
+            margin-bottom: 9px;
+        }
+        &__hint {
+            width: ~'calc(100% + 37px)';
+            margin: 0 -20px 0 -17px;
+
+            font-size: 1.2rem;
+            line-height: 2rem;
+        }
+    }
+}

@@ -1,0 +1,68 @@
+.p-about-headline {
+    .container;
+    .edge-paddings;
+
+    position: relative;
+    z-index: 1;
+    &__spot {
+        position: absolute;
+        top: -5px;
+        right: 20%;
+        left: 10%;
+        bottom: -150px;
+        z-index: 3;
+        
+        pointer-events: none;
+        mix-blend-mode: difference;
+        svg {
+            width: 100%;
+            height: 100%;
+
+            fill: @color-gray-lightest;
+        }
+        &._hidden {
+            display: none;
+        }
+    }
+    &__title {
+        position: relative;
+        z-index: 2;
+
+        margin-bottom: 20px;
+
+        font-size: 10rem;
+        font-weight: 500;
+        line-height: 0.9em;
+    }
+    &__subtitle {
+        position: relative;
+        z-index: 1;
+
+        font-size: 3.2rem;
+        font-weight: 500;
+        line-height: 3.7rem;
+    }
+    @media @media-xl-down {
+        &__spot {
+            top: 30px;
+            bottom: 30px;
+        }
+    }
+    @media @media-md-down {
+        &__spot {
+            top: 0;
+            right: 8px;
+            bottom: 0;
+            left: 34px;
+        }
+        &__title {
+            margin-bottom: 10px;
+            font-size: 2.4rem;
+            line-height: 2.8rem;
+        }
+        &__subtitle {
+            font-size: 1.6rem;
+            line-height: 2.7rem;
+        }
+    }
+}

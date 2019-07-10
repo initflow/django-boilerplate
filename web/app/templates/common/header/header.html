@@ -1,0 +1,344 @@
+{% load multimenus translation %}
+
+<header class="c-header"
+        data-c-header
+        v-cloak
+        >
+    <div class="c-header__cover"></div>
+    <div class="c-header__logo">
+        <a class="c-header__logo-link" href="/" data-c-navlink>
+            <div class="c-header__logo-link-svg">
+                <div class="i i-logo-small"></div>
+            </div>
+        </a>
+    </div>
+    <div class="c-header__menu_desktop">
+        <div class="c-header__menu_desktop-list">
+            {% show_multi_menu "HEADER_MENU" "common/header/partials/header_menu_desktop_items.html" %}
+            <div class="c-header__menu_desktop-list-languages"
+                v-on:click="closeSearch"
+                >
+                <div class="c-header__menu_desktop-list-languages-trigger">
+                    [[ language ]]
+                </div>
+                <div class="c-header__menu_desktop-list-languages-list">
+                    <div class="c-header__menu_desktop-list-languages-list-container">
+                        <div class="c-header__menu_desktop-list-languages-list-item"
+                            v-for="(item, index) in languages"
+                            v-if="item !== language"
+                            v-bind:key="index"
+                            v-on:click="switchLanguage(item)"
+                            >
+                            [[ item ]]
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="c-header__menu_desktop-list-item"
+                v-on:click="toggleSearch"
+                >
+                <div class="i i-search"></div>
+            </div>
+        </div>
+    </div>
+    <div class="c-header__streams">
+        <div class="c-header__streams-item _live"
+            v-bind:class="{ 
+                '_active': live.isOnline, 
+                '_opened': isOpenedLive
+                }"
+            >
+            <div class="c-header__streams-item-trigger"
+                {% comment %} v-on:click="isPlaying('live') ? pause() : play('live')" {% endcomment %}
+                v-on:click.stop="toggleLive"
+                >
+                <div class="c-header__streams-item-trigger-icon">
+                    •
+                </div>
+                <div class="c-header__streams-item-trigger-text _desktop">
+                    {% trans 'Прямой эфир ((в шапке сайта))' %}
+                    
+                </div>
+                <div class="c-header__streams-item-trigger-text _mobile">
+                    {% trans 'Эфир' %}
+                </div>
+            </div>
+            <div class="c-header__streams-item-wrapper"
+                v-if="live.isOnline"
+                >
+                <div class="c-header__streams-item-content">
+                    <div class="c-header__streams-item-content-info">
+                        <div class="c-header__streams-item-content-info-image"
+                            role="img"
+                            v-bind:alt="live.event.name"
+                            v-bind:style="{ backgroundImage: 'url(' + live.event.image + ')'}"
+                            v-bind:class="{ '_disabled': live.track.source === null }"
+                            v-on:click="isPlaying('live') ? pause() : play('live')"
+                            >
+                            <div class="c-header__streams-item-content-info-image-icon"
+                                v-if="isPlaying('live')"
+                                >
+                                <span class="i i-player-pause"></span>
+                            </div>
+                            <div class="c-header__streams-item-content-info-image-icon"
+                                v-if="isLoading('live')"
+                                >
+                                <div class="c-header__streams-item-content-info-image-icon-loader">
+                                    <div class="ui-loader"></div>
+                                </div>
+                            </div>
+                            <div class="c-header__streams-item-content-info-image-icon"
+                                v-if="isPaused('live') || !isCurrent('live')"
+                                >
+                                <span class="i i-player-play"></span>
+                            </div>
+                        </div>
+                        <div class="c-header__streams-item-content-info-texts">
+                            <div class="c-header__streams-item-content-info-texts-title">
+                                {% trans 'Сейчас в эфире' %}
+                                
+                            </div>
+                            <div class="c-header__streams-item-content-info-texts-name">
+                                [[ live.event.name ]]
+                            </div>
+                            <div class="c-header__streams-item-content-info-texts-description">
+                                [[ live.event.description ]]
+                            </div>
+                        </div>
+                    </div>
+                    <a class="c-header__streams-item-content-link"
+                        data-c-navlink
+                        v-bind:href="live.event.url"
+                        >
+                        {% trans 'Подробнее' %}
+                        <span class="c-header__streams-item-content-link-icon">
+                            <span class="i i-player-next"></span>
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="c-header__streams-item _radio"
+            v-bind:class="{ 
+                '_active': radio.isOnline, 
+                '_opened': isOpenedRadio
+                }"
+            >
+            <div class="c-header__streams-item-trigger"
+                {% comment %} v-on:click="isPlaying('radio') ? pause() : play('radio')" {% endcomment %}
+                v-on:click.stop="toggleRadio"
+                >
+                <div class="c-header__streams-item-trigger-icon">
+                    <div class="i i-player-play"></div>
+                </div>
+                <div class="c-header__streams-item-trigger-text _desktop">
+                    {% trans 'Слушать музыку' %}
+                </div>
+                <div class="c-header__streams-item-trigger-text _mobile">
+                    {% trans 'Радио' %}
+                </div>
+            </div>
+            <div class="c-header__streams-item-wrapper"
+                v-if="radio.isOnline"
+                >
+                <div class="c-header__streams-item-content">
+                    <div class="c-header__streams-item-content-info">
+                        <div class="c-header__streams-item-content-info-image _mobile"
+                            role="img"
+                            v-bind:alt="radio.track.name ? radio.track.name : 'Track Image'"
+                            v-bind:style="radio.track.image ? 'background-image: url('  + radio.track.image + ')' : ''"
+                            v-on:click="isPlaying('radio') ? pause() : play('radio')" 
+                            >
+                            <div class="c-header__streams-item-content-info-image-icon"
+                                v-if="isPlaying('radio')"
+                                >
+                                <span class="i i-player-pause"></span>
+                            </div>
+                            <div class="c-header__streams-item-content-info-image-icon"
+                                v-if="isLoading('radio')"
+                                >
+                                <div class="c-header__streams-item-content-info-image-icon-loader">
+                                    <div class="ui-loader"></div>
+                                </div>
+                            </div>
+                            <div class="c-header__streams-item-content-info-image-icon"
+                                v-if="isPaused('radio') || !isCurrent('radio')"
+                                >
+                                <span class="i i-player-play"></span>
+                            </div>
+                        </div>
+                        <div class="c-header__streams-item-content-info-texts">
+                            <div class="c-header__streams-item-content-info-texts-title">
+                                {% trans 'Сейчас играет' %}
+                            </div>
+                            <div class="c-header__streams-item-content-info-texts-name"
+                                v-if="radio.track.name"
+                                >
+                                [[ radio.track.name ]]
+                            </div>
+                            <div class="c-header__streams-item-content-info-texts-description"
+                                v-if="radio.track.author"
+                                >
+                                [[ radio.track.author ]]
+                            </div>
+                        </div>
+                    </div>
+                    {% comment %} <div class="c-header__streams-item-content-link"
+                        data-c-navlink
+                        href="#"
+                        >
+                        К событию
+                        <span class="c-header__streams-item-content-link-icon">
+                            <span class="i i-player-next"></span>
+                        </span>
+                    </div> {% endcomment %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="c-header__menu_mobile"
+        v-bind:class="{ '_active' : isOpenedMenu }"
+        >
+        <div class="c-header__menu_mobile-trigger"
+            v-on:click.self.stop="toggleMenu"
+            >
+            {% trans 'Меню' %}
+        </div>
+        <div class="c-header__menu_mobile-list">
+            <div class="c-header__menu_mobile-list-container">
+                {% show_multi_menu "HEADER_MENU" "common/header/partials/header_menu_mobile_items.html" %}
+                <div class="c-header__menu_mobile-list-item"
+                    v-on:click.stop="toggleSearch"
+                    >
+                    <div class="c-header__menu_mobile-list-item-icon">
+                        <div class="i i-search"></div>
+                    </div>
+                    {% trans 'Поиск' %}
+                </div>
+                <div class="c-header__menu_mobile-list-languages">
+                    <div class="c-header__menu_mobile-list-languages-item"
+                        v-for="(item, index) in languages"
+                        v-bind:key="index"
+                        v-bind:class="{ '_active': item === language }"
+                        v-on:click="switchLanguage(item)"
+                        >
+                        [[ item ]]
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="c-header__search"
+        v-bind:class="{ '_active': search.isOpened }"
+        >
+        <form class="c-header__search-form"
+            v-on:submit.prevent="submitSearch"
+            >
+            <div class="c-header__search-form-icon q-lg-up">
+                <div class="i i-search"></div>
+            </div>
+            <input class="c-header__search-form-input"
+                ref="searchInput"
+                name="query"
+                type="text"
+                placeholder="{% trans 'Поиск' %}"
+                v-model="search.query"
+                v-on:input="debounceSearch($event.target.value)"
+            />
+            <div class="c-header__search-form-close"
+                v-on:click="closeSearch"
+                >
+                <div class="c-header__search-form-close-text">
+                    {% trans 'Закрыть' %}
+                </div>
+                <div class="c-header__search-form-close-icon">
+                    <div class="i i-close"></div>
+                </div>
+            </div>
+            {% comment %} <div class="c-header__search-form-submit q-md-down">
+                <button class="ui-button"
+                    type="submit"
+                    >
+                    <div class="ui-button__text">
+                        {% trans 'Искать' %}
+                    </div>
+                    <div class="ui-button__icon">
+                        <div class="i i-search"></div>
+                    </div>
+                </button>
+            </div> {% endcomment %}
+        </form>
+        <div class="c-header__search-results">
+            <div class="c-header__search-results-loader"
+                v-if="search.status === 'loading'"
+                >
+                <div class="ui-loader"></div>
+            </div>
+            <template v-else>
+                <div class="c-header__search-results-total"
+                    v-if="search.results !== null && search.results.length > 0"
+                    >
+                    {% trans 'Найдено событий' %}: <span class="c-header__search-results-total-value">[[ search.results.length ]]</span>
+                </div>
+                <div class="c-header__search-results-empty"
+                    v-if="search.results !== null && search.results.length === 0"
+                    >
+                    {% trans 'К сожалению, по вашему запросу мы не смогли ничего найти' %}
+                </div>
+                {% comment %} <div class="c-header__search-results-suggestions">
+                    {% trans 'Возможно, вы искали' %} <span class="c-header__search-results-suggestions-item">After live</span>
+                </div> {% endcomment %}
+                <div class="c-header__search-results-list"
+                    v-if="search.results !== null && search.results.length > 0"
+                    >
+                    <a class="c-header__search-results-list-item"
+                        v-for="(item, index) in search.results"
+                        v-bind:key="index"
+                        v-bind:href="'/event/' + item.slug + '/'"
+                        v-on:click="closeSearch"
+                        data-c-navlink
+                        >
+                        <div class="c-header__search-results-list-item-cover">
+                            <div class="c-header__search-results-list-item-cover-image"
+                                v-bind:style="{ backgroundImage: 'url('  + item.promo_image + ')'}"
+                                >
+                            </div>
+                            <div class="c-header__search-results-list-item-cover-control"
+                                v-if="item.audio !== null && (!isCurrentSearchItem(item) || isPausedSearchItem(item))"
+                                v-on:click.stop.prevent="searchPlay(item)"
+                                >
+                                <div class="c-header__search-results-list-item-cover-control-icon">
+                                    <div class="i i-player-play"></div>
+                                </div>
+                            </div>
+                            <div class="c-header__search-results-list-item-cover-control"
+                                v-if="item.audio !== null && isLoadingSearchItem(item)"
+                                v-on:click.stop.prevent=""
+                                >
+                                <div class="c-header__search-results-list-item-cover-control-icon">
+                                    <div class="c-header__search-results-list-item-cover-control-icon-loader">
+                                        <div class="ui-loader"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="c-header__search-results-list-item-cover-control"
+                                v-if="item.audio !== null && isPlayingSearchItem(item)"
+                                v-on:click.stop.prevent="searchPause()"
+                                >
+                                <div class="c-header__search-results-list-item-cover-control-icon">
+                                    <div class="i i-player-pause"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="c-header__search-results-list-item-info">
+                            <div class="c-header__search-results-list-item-info-title"
+                                v-html="getHighlightedName(item.name)"
+                                >
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </template>
+        </div>
+    </div>
+</header>

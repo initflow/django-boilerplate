@@ -1,0 +1,50 @@
+version: '2'
+services:
+  web:
+    restart: always
+    image: registry.gitlab.com/initflow/hevensy/web/web:latest
+    expose:
+      - "8000"
+    links:
+      - postgres:postgres
+      - redis:redis
+    env_file: .env
+    volumes:
+      - /srv/media/:/usr/src/app/media
+      - static_files:/usr/src/app/static
+    command: /usr/local/bin/gunicorn app.wsgi:application -w 2 -b :8000
+
+  nginx:
+    restart: always
+    image: registry.gitlab.com/initflow/hevensy/web/nginx:latest
+    ports:
+    - "80:80"
+    - "443:443"
+    env_file: .env
+    volumes:
+      - ./letsencrypt:/etc/letsencrypt
+      - /srv/pwd:/etc/pwd
+    volumes_from:
+      - web
+    links:
+      - web:web
+
+  postgres:
+    restart: always
+    image: postgres:latest
+    hostname: postgres
+    volumes:
+      - /srv/postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432"
+
+
+  redis:
+    image: redis:2.8.19
+    environment:
+      - USER_TOKEN_DB=1
+
+
+
+volumes:
+  static_files:

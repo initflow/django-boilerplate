@@ -1,0 +1,7 @@
+{% load multimenus translation %}
+
+{% for item in items %}
+    <a class="c-footer__main-menu-item" href="{{ item.get_url }}" data-c-navlink>
+        {% menu_translation item %}
+    </a>
+{% endfor %}

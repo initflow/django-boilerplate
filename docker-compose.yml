@@ -7,25 +7,29 @@ services:
       - "8000"
     links:
       - postgres:postgres
-#      - rabbitmq:rabbit
       - redis:redis
     volumes:
       - ./web:/usr/src/app
     env_file: .env
     command: /usr/local/bin/gunicorn app.wsgi:application -w 2 -b :8000 --reload
 
+
   nginx:
     restart: always
     build: ./nginx/
+    environment:
+      TZ: Europe/Moscow
     ports:
-      - "${NGINX_PORT}:80"
+      - "80:80"
+      - "443:443"
     volumes:
-      - /www/static
-    env_file: .env
+      - ./letsencrypt:/etc/letsencrypt
+      # - /www/static
     volumes_from:
       - web
     links:
       - web:web
+
 
   postgres:
     restart: always
@@ -34,7 +38,7 @@ services:
     volumes_from:
       - data
     ports:
-      - "5432:5432"
+      - "5465:5432"
 
 
   data:

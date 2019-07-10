@@ -16,6 +16,8 @@ web/static/
 web/media/
 
 
-.env
+.env*
+!.env.example
 .env.local
-web/investplatform/webpack-stats.json
+letsencrypt/
+web/app/webpack-stats.json

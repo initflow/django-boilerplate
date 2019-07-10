@@ -1,0 +1,25 @@
+.p-about-frame {
+    .container;
+    .edge-paddings;
+    &__frame {
+        width: ~'calc(50% - 60px)';
+        padding: 20px;
+
+        font-size: 3.2rem;
+        line-height: 1.5;
+        white-space: pre-wrap;
+
+        box-shadow: 0 0 0 1px @color-gray-lightest, -5px 5px 0 1px @color-gray-lightest;
+    }
+    @media @media-md-down {
+        &__frame {
+            padding: 15px;
+            max-width: 600px;
+            margin-left: 7px;
+            margin-right: 0;
+            width: auto;
+            font-size: 2.4rem;
+            line-height: 1.5;
+        }
+    }
+}

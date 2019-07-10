@@ -1,0 +1,177 @@
+.c-footer {
+    padding-right: 30px;
+    margin-left: ~'calc(100% / 12)';
+    margin-right: 0;
+    &._index {
+        margin: 0 auto;
+        width: auto;
+        padding: 0 30px;
+        max-width: none;
+    }
+    &__headline {
+        width: 100%;
+        margin-bottom: 20px;
+        ._index & {
+            display: none;
+        }
+        &-logo {
+            display: inline-block;
+
+            font-size: 6.4rem;
+            text-decoration: none;
+        }
+    }
+    &__main {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        width: 100%;
+        margin-bottom: 22px;
+        ._index & {
+            margin-bottom: 0;
+        }
+        &-menu {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+            padding: 10px 40px 10px 0;
+
+            font-size: 1.6rem;
+            line-height: 1.5;
+            &-item {
+                margin-right: 24px;
+
+                text-decoration: none;
+                &:last-child {
+                    margin-right: 0;
+                }
+            }
+        }
+        &-social {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 10px 0;
+            margin-left: auto;
+            margin-right: 60px;
+            ._index & {
+                margin-right: 0;
+            }
+            &-item {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-right: 20px;
+
+                font-size: 1.5rem;
+                text-align: center;
+                text-decoration: none;
+                &:last-child {
+                    margin-right: 0;
+                }
+            }
+        }
+        &-scroller {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            margin-right: 0;
+            
+            font-size: 0.6rem;
+            text-align: center;
+            
+            background-color: @color-gray-main;
+
+            cursor: pointer;
+            ._index & {
+                display: none;
+            }
+        }
+    }
+    &__botline {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        width: 100%;
+        min-height: 60px;
+        padding: 20px 0;
+        border-top: 2px solid @color-gray-main;
+
+        color: @color-gray-lighter;
+        font-size: 1.2rem;
+        ._index & {
+            padding: 10px 0 20px;
+            border-top: none;
+        }
+        &-copyright {
+            padding-right: 20px;
+        }
+        &-development {
+            &-link {
+                text-decoration: underline;
+            }
+        }
+    }
+    @media @media-xxl-down {
+        .container;
+        .edge-paddings;
+
+        padding-right: 30px;
+        margin-left: auto;
+    }
+    @media @media-xl-down {
+        padding-right: 20px;
+    }
+    @media @media-md-down {
+        position: relative;
+        z-index: 1;
+        
+        padding-right: 8px;
+        &__headline {
+            padding-top: 20px;
+            border-top: 2px solid @color-gray-main;
+            margin-bottom: 5px;
+
+            &-logo {
+                font-size: 4.8rem;
+            }
+        }
+        &__main {
+            margin-bottom: 10px;
+            &-menu {
+                flex-direction: column;
+                align-items: flex-start;
+                width: 100%;
+                padding: 0;
+                &-item {
+                    padding: 5px 0;
+                    margin-right: auto;
+                }
+            }
+            &-social {
+                width: 100%;
+                &-item {
+                    margin-right: 40px;
+
+                    font-size: 2.2rem;
+                }
+            }
+            &-scroller {
+                position: absolute;
+                top: 20px;
+                right: 8px;
+                z-index: 1;
+            }
+        }
+        &__botline {
+            &-copyright {
+                margin-bottom: 20px;
+            }
+        }
+    }
+}

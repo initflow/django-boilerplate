@@ -1,0 +1,97 @@
+.s-index {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: ~'calc(100vh - 50px)';
+    margin-bottom: 80px;
+    &__ticker {
+        flex: 0 0 auto;
+        width: 100%;
+        margin: 0;
+        
+        &-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            width: 100%;
+            height: 40px;
+            overflow: hidden;
+        }
+        &-content {
+            flex: 0 0 auto;
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            &._active {
+                animation: animations-s-index__ticker 10s infinite linear;
+
+                @keyframes animations-s-index__ticker {
+                    0% {
+                        transform: translateX(0);
+                    }
+                    100% {
+                        transform: translateX(-100%);
+                    }
+                }
+            }
+            &-item {
+                flex: 0 0 auto;
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                padding: 0 0.475em;
+        
+                font-size: 2.8rem;
+                text-transform: uppercase;
+                white-space: pre;
+            }
+        }
+    }
+    &__bg {
+        flex: 1 1 auto;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        width: 100%;
+        // width: auto;
+        // max-width: ~'calc(100% - 60px)';
+        height: 100%;
+        // margin: 0 auto;
+        overflow: hidden;
+    
+        &-video {
+            min-height: 100%;
+    
+            // filter: grayscale(0.75);
+        }
+    }
+    @media @media-md-down {
+        &__ticker {
+            &-wrapper {
+                height: 25px;
+            }
+            &-content {
+                &-item {
+                    font-size: 2rem;
+                }
+            }
+        }
+        &__bg {
+            flex: 0 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            width: 300px;
+            max-width: 100%;
+            height: 300px;
+            overflow: hidden;
+            margin: auto;
+            &-video {
+                width: 1000px;
+                min-height: 0;
+            }
+        }
+    }
+}

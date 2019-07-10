@@ -1,0 +1,11 @@
+.c-modal-generic
+    if title
+        .c-modal-generic__title #{title}
+    if text
+        .c-modal-generic__hint #{text}
+    else 
+        .c-modal-generic__hint Ошибка
+    if buttons && buttons.length > 0
+        each button in buttons
+            .c-modal-generic__button
+                .ui-button(data-c-modal-generic-element="button") #{button.text}

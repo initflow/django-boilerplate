@@ -1,0 +1,59 @@
+.p-shop-text-and-frame {
+    .container;
+    .edge-paddings;
+
+    display: flex;
+    align-items: center;
+    &__text {
+        flex: 1 1 auto;
+        padding-right: 70px;
+
+        font-size: 5.6rem !important;
+
+        p {
+            margin: 0;
+        }
+    }
+    &__frame {
+        flex: 0 0 auto;
+        width: 400px;
+        padding: 10px 15px;
+
+        font-size: 1.8rem;
+        line-height: 3.4rem;
+
+        box-shadow: 0 0 0 1px @color-gray-lightest, -5px 5px 0 1px @color-gray-lightest;
+        p {
+            margin: 0;
+        }
+    }
+    @media @media-xl-down {
+        &__text {
+            font-size: 3.2rem !important;
+        }
+    }
+    @media @media-lg-down {
+        &__text {
+            font-size: 2.4rem !important;
+        }
+    }
+    @media @media-md-down {
+        flex-direction: column;
+
+        &__text {
+            width: 100%;
+            padding-right: 0;
+            margin-bottom: 40px;
+
+            font-size: 2.4rem !important;
+        }
+        &__frame {
+            margin-left: 7px;
+            margin-right: 0;
+            width: auto;
+
+            font-size: 1.6rem;
+            line-height: 2.7rem;
+        }
+    }
+}

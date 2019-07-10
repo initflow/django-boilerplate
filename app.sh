@@ -4,16 +4,6 @@ if [ ! -z $1 ]; then
     FUNCTION="$1"
 fi
 
-platform='unknown'
-unmaster=`uname`
-
-if [[ $unmaster == 'Linux' ]]; then
-   platform='linux'
-elif [[ $unmaster == 'MINGW64_NT-10.0' ]]; then
-    platform='windows'
-elif [[ $unmaster == 'Darwin' ]]; then
-   platform='mac'
-fi
 
 
 
@@ -24,11 +14,11 @@ show-help() {
 }
 
 rundocker() {
-    echo 'Stop all containert'
+    echo 'Stop all containers'
     docker stop $(docker ps -a -q)
     echo ''
     echo 'Start containers'
-    docker-compose -p forus-notification up -d
+    docker-compose -p hevensy up -d
     echo ''
 }
 
@@ -40,6 +30,11 @@ start() {
 
 migrate() {
     docker exec -it $(get_container_name 'web') python manage.py migrate
+}
+
+dump() {
+  mkdir -p ./dumps
+  docker exec -t $(get_container_name 'postgres') pg_dumpall -c -U postgres > ./dumps/dump_`date +%d-%m-%Y"_"%H_%M_%S`.sql
 }
 
 logs() {
@@ -68,12 +63,21 @@ makemigrations() {
 
 
 collectstatic() {
-  #  docker exec -it $(get_container_name 'web') bash -c "cd app && npm i && npm run build"
-    docker exec -it $(get_container_name 'web') python manage.py collectstatic
+    docker exec -it $(get_container_name 'web') python manage.py collectstatic --noinput
 }
 
+build_frontend() {
+    docker exec -it $(get_container_name 'web') bash -c "cd app && npm ci && npm run build && cp webpack-stats.json webpack-stats-live.json"
+}
+
+
+sync_database() {
+    docker exec -it $(get_container_name 'web') python manage.py sync_database
+}
+
+
 get_container_name() {
-   docker ps -a --filter="name=forus-notification_$1" --format '{{.Names}}'
+   docker ps -a --filter="name=hevensy_$1" --format '{{.Names}}'
 }
 
 
@@ -82,7 +86,7 @@ get_container_name() {
 
 
 stop() {
-    echo 'Stop all containert'
+    echo 'Stop all containers'
     docker stop $(docker ps -a -q)
 }
 
@@ -102,10 +106,12 @@ first_run() {
     start
 }
 
+
+
 update() {
    echo 'Build containers with cache'
-   docker-compose -p forus-notification build worker
-   docker-compose -p forus-notification build web
+   docker-compose -p hevensy build worker
+   docker-compose -p hevensy build web
 }
 
 
@@ -113,8 +119,8 @@ update() {
 
 build() {
    echo 'Build containers'
-   docker-compose -p forus-notification build worker --no-cache
-   docker-compose -p forus-notification build --no-cache
+   docker-compose -p hevensy build worker --no-cache
+   docker-compose -p hevensy build --no-cache
 }
 
 
@@ -127,6 +133,10 @@ get_variable(){
         echo $B
       fi
     done <.env
+}
+
+cert() {
+    docker exec -it $(get_container_name 'nginx') /etc/nginx/ssl/certbot.sh -v
 }
 
 case "$1" in

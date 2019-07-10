@@ -1,0 +1,43 @@
+{% load multimenus translation %}
+
+{% ifequal variant 'index' %}
+    <footer class="c-footer _index" data-c-footer>
+{% else %}
+    <footer class="c-footer" data-c-footer>
+{% endifequal %}
+    <div class="c-footer__headline">
+        <a class="c-footer__headline-logo" href="/" data-c-navlink>
+            <div class="i i-logo"></div>
+        </a>
+    </div>
+    <div class="c-footer__main">
+        <div class="c-footer__main-menu">
+            {% show_multi_menu "FOOTER_MENU" "common/footer/partials/footer_menu_items.html" %}
+        </div>
+        <div class="c-footer__main-social">
+            <a class="c-footer__main-social-item" href="{% trans 'social link (vkontakte)' %}" target="_blank">
+                <span class="i i-vkontakte"></span>
+            </a>
+            <a class="c-footer__main-social-item" href="{% trans 'social link (youtube)' %}" target="_blank">
+                <span class="i i-youtube"></span>
+            </a>
+            <a class="c-footer__main-social-item" href="{% trans 'social link (instagram)' %}" target="_blank">
+                <span class="i i-instagram"></span>
+            </a>
+            <a class="c-footer__main-social-item" href="{% trans 'social link (facebook)' %}" target="_blank">
+                <span class="i i-facebook"></span>
+            </a>
+        </div>
+        <div class="c-footer__main-scroller" data-c-footer-element="scroller">
+            <span class="i i-arrow-up"></span>
+        </div>
+    </div>
+    <div class="c-footer__botline">
+        <div class="c-footer__botline-copyright">
+            © 2011–{% now "Y" %} {% trans 'АНО «НОВАЯ ГОЛЛАНДИЯ». Все права защищены.' %}
+        </div>
+        <div class="c-footer__botline-development">
+            {% trans 'Дизайн и разработка' %}: <a class="c-footer__botline-development-link" href="https://www.initflow.com" target="_blank">Initflow</a>
+        </div>
+    </div>
+</footer>
