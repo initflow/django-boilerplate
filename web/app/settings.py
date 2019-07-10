@@ -108,7 +108,6 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'libraries': {
-                'translation': 'app.templatetags.translation',
             },
             'context_processors': [
                 'django.template.context_processors.debug',

@@ -24,14 +24,10 @@ from rest_framework.documentation import include_docs_urls
 
 from apps.core.view import errors
 
-
-from apps.event.sitemap import sitemaps as event_sitemaps
-
 admin.autodiscover()
 
 sitemaps = dict()
 sitemaps.update({'cmspages': CMSSitemap})
-sitemaps.update(event_sitemaps)
 
 urlpatterns = [
     url(r'^sitemap\.xml/$', sitemap,
@@ -45,9 +41,6 @@ urlpatterns = [
 
 
 urlpatterns += i18n_patterns(
-    url(r'^event/', include('apps.event.urls'), name='events'),
-    url(r'^core/', include('apps.core.urls')),
-    url(r'^week_record/', include('apps.week_record.urls')),
     url(r'^', include('cms.urls')),
 )
 
