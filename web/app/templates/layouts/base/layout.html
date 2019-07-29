@@ -17,12 +17,16 @@
             {% include "./partials/layout_meta.html" %}
         {% endblock meta %}
 
-        {% render_block "css" %}
-        {% render_bundle 'main' 'css' %}
-
         {% block preloaded_styles %}
             {% include "./partials/layout_preloaded_styles.html" %}
         {% endblock preloaded_styles %}
+
+        {% block analitics %}
+            {% include "./partials/layout_analitics.html" %}
+        {% endblock analitics %}
+
+        {% render_block "css" %}
+        {% render_bundle 'main' 'css' %}
     </head>
     <body>
         {% cms_toolbar %}
