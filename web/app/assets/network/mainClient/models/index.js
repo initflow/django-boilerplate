@@ -1,8 +1,6 @@
-import EventsModel from './EventsModel';
-import RadioModel from './RadioModel';
+import ExampleModel from './ExampleModel';
 
 export {
-  EventsModel,
-  RadioModel,
+  ExampleModel,
 };
 

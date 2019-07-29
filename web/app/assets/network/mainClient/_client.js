@@ -1,12 +1,13 @@
 import axios from 'axios';
 
 import config from '../../config';
+import { getCurrentLanguage } from '../../utils/common';
 import { ErrorModel } from './models';
 
 class Client {
     constructor() {
         this.axios = axios.create({
-            baseURL: config.api.baseUrl,
+            baseUrl: `/${getCurrentLanguage()}/`,
             responseType: 'json'
         });
     }

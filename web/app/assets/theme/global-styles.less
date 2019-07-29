@@ -14,13 +14,40 @@ html {
     font-weight: 400;
     font-size: 10px;
     line-height: 1.5;
-    color: #ffffff;
+    color: @color-gray-darkest;
 
-    background-color: @color-gray-darkest;
+    background-color: @color-gray-lightest;
     &.cms-toolbar-expanded {
         padding-top: 46px !important;
         margin-top: 0 !important;
     }
+}
+body {
+    margin: 0;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+}
+.content-placeholder {
+    pointer-events: none;
+    animation: content-placeholder-animation__remove 0.5s linear forwards;
+    @keyframes content-placeholder-animation__remove {
+        0% {
+            opacity: 1;
+        }
+        99% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 0;
+            visibility: hidden;
+        }
+    }
+}
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 100vh;
 }
 a {
     cursor: pointer;

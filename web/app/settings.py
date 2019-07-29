@@ -196,9 +196,7 @@ USE_L10N = False
 
 ADMIN_ENABLED = os.environ.get('ADMIN_ENABLED', 'False') == 'True'
 CMS_TEMPLATES = (
-    ('layouts/base/layout_base.html', 'Базовый шаблон'),
-    ('layouts/base/layout_index.html', 'Шаблон главной страницы'),
-    ('layouts/base/layout_with_ticker.html', 'Шаблон c бегущей строкой'),
+    ('layouts/base/layout.html', 'Базовый шаблон'),
 )
 
 SITE_ID = 1
