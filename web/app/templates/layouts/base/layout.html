@@ -1,0 +1,64 @@
+{% load cms_tags menu_tags sekizai_tags %}
+{% load render_bundle from webpack_loader %}
+{% page_attribute "page_title" as title %}
+{% page_attribute "meta_description" as description %}
+<!doctype html>
+<html>
+    <head>
+        {% if title|length > 0 %}
+            <title>{{title}} | New Holland</title>
+        {% else %}
+            <title>{% block title %}{% endblock title %}</title>
+        {% endif %}
+
+        <link rel="icon" type="image/png" href="https://nh-radio-static-assets.s3.eu-north-1.amazonaws.com/images/favicon.png">
+
+        {% block meta %}
+            {% include "./partials/layout_meta.html" %}
+        {% endblock meta %}
+
+        {% block preloaded_styles %}
+            {% include "./partials/layout_preloaded_styles.html" %}
+        {% endblock preloaded_styles %}
+
+        {% block analitics %}
+            {% include "./partials/layout_analitics.html" %}
+        {% endblock analitics %}
+
+        {% render_block "css" %}
+        {% render_bundle 'main' 'css' %}
+    </head>
+    <body>
+        {% cms_toolbar %}
+        <section class="content-placeholder">
+            <div class="content-placeholder__loader">
+            </div>
+        </section>
+        <section data-app class="wrapper"
+            v-cloak
+            >
+            <l-global inline-template>
+                <section class="l-global">
+                    <section class="l-global__header">
+                        {% block header %}
+                            {% include "common/header/header.html" %}
+                        {% endblock header %}
+                    </section>
+                    <main class="l-global__main">
+                        {% block content %}
+                            {% placeholder "content" %}
+                        {% endblock content %}
+                    </main>
+                </section>
+            </l-global>
+        </section>
+        {% csrf_token %}
+
+        {% block special_js %}
+            {% placeholder "special_js" %}
+        {% endblock special_js %}
+
+        {% render_block "js" %}
+        {% render_bundle 'main' 'js' %}
+    </body>
+</html>
