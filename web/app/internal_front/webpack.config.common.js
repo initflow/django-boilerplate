@@ -4,7 +4,7 @@ const BundleTracker = require('webpack-bundle-tracker');
 module.exports = {
     entry: {
         main: [
-            "./assets/icons/icons.font",
+            "./assets/static/icons/icons.font",
             "./assets/index.less",
             "./assets/index.js"
         ]
@@ -29,18 +29,6 @@ module.exports = {
                 loader: "json-loader"
             },
             // CSS/LESS and svg->fonts rules separated for prod and dev
-            {
-                test: /\.pug$/, 
-                loader: "pug-loader",
-                options: {
-                    pretty: true,
-                    resolve: {
-                        alias: {
-                            templates: path.resolve(__dirname, "../templates"),
-                        }
-                    }
-                }
-            },
             {
                 test: /\.(png|gif|jpg)$/,
                 use: [
