@@ -14,6 +14,15 @@ export const api = {
     },
 };
 
+export const bodyAttributes = {
+    loaded: 'data-app-loaded',
+};
+
+export const vue = {
+    delimiters: ['[[', ']]'],
+    rootSelector: '[data-app]',
+};
+
 export const localStorage = {
     keyPrefix: 'newHolland',
 };
@@ -21,14 +30,16 @@ export const localStorage = {
 export const translations = [
     {
         code: 'ru',
-        name: 'Eng'
+        title: 'Eng'
     }
 ];
 
 const config = {
     api,
-    translations,
+    bodyAttributes,
+    vue,
     localStorage,
+    translations,
 };
 
 export default config;

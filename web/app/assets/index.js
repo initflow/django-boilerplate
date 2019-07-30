@@ -1,26 +1,8 @@
-import Vue from 'vue';
-
-// Utils
-import './utils/polyfills';
+// Polyfills
+import './polyfills';
 
 // Components
-// UI
-
-// Common
-import commonHeader from './components/common/header';
-import commonCounter from './components/common/counter';
-
-// Plugins
-
-// Screens
-
-// Layouts
-import layoutGlobal from './components/layouts/global';
+import './components';
 
 // App
-import app from './app';
-
-window.addEventListener('load', () => {
-    console.log(app.$el);
-    // everything is loaded
-});
+import './app';

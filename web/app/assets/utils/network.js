@@ -14,3 +14,7 @@ export const customParamsSerializer = (params) => {
     }
     return parts.join('&');
 };
+
+export default {
+    customParamsSerializer,
+};
