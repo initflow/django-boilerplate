@@ -6,7 +6,7 @@ module.exports = {
         main: [
             "./assets/static/icons/icons.font",
             "./assets/index.less",
-            "./assets/index.js"
+            "./assets/index.js",
         ]
     },
     resolve: {
@@ -30,24 +30,14 @@ module.exports = {
             },
             // CSS/LESS and svg->fonts rules separated for prod and dev
             {
-                test: /\.(png|gif|jpg)$/,
-                use: [
-                    {
-                        loader: "url-loader",
-                        options: {
-                            name: "assets/images/[name].[ext]",
-                            limit: 1000
-                        }
-                    }
-                ]
-            },
-            {
-                test: /\.(mp4|webm)$/,
+                test: /\.(png|gif|jpg|jpeg|ico|tiff)$/,
                 use: [
                     {
                         loader: "file-loader",
                         options: {
-                            name: "assets/video/[name].[ext]"
+                            name: "[path][name].[ext]",
+                            outputPath: "images2",
+                            context: './assets/static/images',
                         }
                     }
                 ]
@@ -57,7 +47,9 @@ module.exports = {
                 use: [ {
                     loader: "file-loader",
                     options: {
-                        name: "assets/fonts/[name].[ext]"
+                        name: "[path][name].[ext]",
+                        outputPath: "fonts",
+                        context: './assets/static/fonts',
                     }
                 }]
             }

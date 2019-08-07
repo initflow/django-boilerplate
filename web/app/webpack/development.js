@@ -1,5 +1,5 @@
 const merge = require('webpack-merge');
-const common = require('./webpack.config.common.js');
+const common = require('./common.js');
 const path = require('path');
 const port = 9000;
 
@@ -85,5 +85,5 @@ module.exports = merge(common, {
         port: port,
         headers: { 'Access-Control-Allow-Origin': '*' }
     },
-    devtool: 'eval-sourcemap'
+    devtool: 'eval-sourcemap',
 });

@@ -1,10 +1,11 @@
 const webpack = require('webpack');
 const merge = require('webpack-merge');
-const common = require('./webpack.config.common.js');
+const common = require('./common.js');
 const path = require('path');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const TerserJSPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = merge(common, {
     output: {
@@ -25,11 +26,6 @@ module.exports = merge(common, {
     },
     module: {
         rules: [
-            {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                loader: "babel-loader",
-            },
             {
                 test: /\.less$/,
                 use: [
@@ -78,8 +74,8 @@ module.exports = merge(common, {
                         loader: 'replace-loader',
                         options: {
                             flags: 'g',
-                            regex: '\/assets\/',
-                            sub: '\.\/assets\/'
+                            regex: '\/icons\/',
+                            sub: '\.\/icons\/'
                         }
                     },
                     {
@@ -87,7 +83,7 @@ module.exports = merge(common, {
                     },
                     {
                         loader: "webfonts-loader",
-                        options: { fileName: './assets/[fontname]-[hash].[ext]' }
+                        options: { fileName: 'icons/[fontname]-[hash].[ext]' }
                     }
                 ],
             },
@@ -102,11 +98,17 @@ module.exports = merge(common, {
         new MiniCssExtractPlugin({
             filename: '[name]-[contenthash].css',
         }),
-        // new TerserJSPlugin({
-        //     // test: /\.js$/,
-        //     // test: /\.js/,
-        //     include: /\.\/assets/,
-        // }), 
-
+        new CopyWebpackPlugin(
+            [
+                {
+                    from: 'images',
+                    to: 'images',
+                },
+            ],
+            {
+                context: '../app/assets/static/',
+                copyUnmodified: true,
+            }
+        )
     ]
 });
