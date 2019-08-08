@@ -15,6 +15,16 @@ export const customParamsSerializer = (params) => {
     return parts.join('&');
 };
 
+export const getCSRFToken = () => {
+    const token = document.querySelector('[name="csrfmiddlewaretoken"]');
+    if (!token) {
+        console.error('CSRF token not found');
+        return '';
+    }
+    return document.querySelector('[name="csrfmiddlewaretoken"]').value;
+}
+
 export default {
     customParamsSerializer,
+    getCSRFToken,
 };
