@@ -1,4 +1,4 @@
-import { translations } from '../config';
+import { languages } from '../config';
 
 export const getCurrentLanguage = () => {
     let result = {
@@ -7,7 +7,7 @@ export const getCurrentLanguage = () => {
     };
     try {
         const path = window.location.pathname;
-        for (const language in translations) {
+        for (const language in languages) {
             if (path.indexOf(`/${language.code}/`) !== -1) {
                 result = language;
                 break;

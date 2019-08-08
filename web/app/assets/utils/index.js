@@ -4,7 +4,7 @@ import dom from './dom';
 import environments from './environments';
 import navigation from './navigation';
 import network from './network';
-import translations from './translations';
+import i18n from './i18n';
 
 export default {
     colors,
@@ -13,5 +13,5 @@ export default {
     environments,
     navigation,
     network,
-    translations,
+    i18n,
 };

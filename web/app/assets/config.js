@@ -27,7 +27,7 @@ export const localStorage = {
     keyPrefix: 'newHolland',
 };
 
-export const translations = [
+export const languages = [
     {
         code: 'ru',
         title: 'Eng'
@@ -39,7 +39,7 @@ const config = {
     bodyAttributes,
     vue,
     localStorage,
-    translations,
+    languages,
 };
 
 export default config;

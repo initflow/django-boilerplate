@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import config from '../../config';
-import { getCurrentLanguage } from '../../utils/common';
+import { getCurrentLanguage } from '../../utils/i18n';
 import { ErrorModel } from './models';
 
 class Client {
