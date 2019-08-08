@@ -3,7 +3,6 @@
 *env/
 *db.sqlite3
 
-static/
 
 web/app/static/
 !web/app/static/login.js

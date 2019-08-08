@@ -1,30 +1,23 @@
-// v.1.1.0 - 29.07.19
+// v.1.1.1 - 30.07.19
 import Vue from 'vue';
 import store from './store';
+import utils from './utils';
+import config from './config';
 
-const cmsScripts = document.querySelectorAll('script[data-cms]');
-console.log(cmsScripts.length);
-for (let i = 0; i < cmsScripts.length; i++) {
-    const script = cmsScripts[i];
-    script.setAttribute('type', 'application/javascript');
-}
+utils.dom.bindLoadListener();
+utils.common.updateDjangoScriptTags();
 
 const app = new Vue({
-    el: document.querySelector('[data-app]'),
+    el: document.querySelector(config.vue.rootSelector),
     store,
-    delimiters: ['[[', ']]'],
+    delimiters: config.vue.delimiters,
     data: {
-        test: 'test text 111',
     },
     mounted() {
-        console.log(this.test);
+        console.log('app mounted');
     },
     methods: {
-        testMethod() {
-            this.test = this.test === 'new test text' ? 'test text 111' : 'new test text';
-        }
     },
 });
-window.app = app;
 
 export default app;

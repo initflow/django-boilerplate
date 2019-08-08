@@ -37,20 +37,23 @@
         <section data-app class="wrapper"
             v-cloak
             >
-            <l-global inline-template>
-                <section class="l-global">
-                    <section class="l-global__header">
+            <layout-global inline-template>
+                <section class="layout-global">
+                    <section class="layout-global__header">
                         {% block header %}
                             {% include "common/header/header.html" %}
                         {% endblock header %}
                     </section>
-                    <main class="l-global__main">
+                    <main class="layout-global__main">
                         {% block content %}
                             {% placeholder "content" %}
                         {% endblock content %}
+                        <div>
+                            Icons test: <span class="icon icon-close"></span>
+                        </div>
                     </main>
                 </section>
-            </l-global>
+            </layout-global>
         </section>
         {% csrf_token %}
 
