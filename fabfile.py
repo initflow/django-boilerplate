@@ -82,13 +82,13 @@ def deploy():
 
     # remove static volume
 
-    docker_compose('-p hevensy down')
-    run('docker volume rm -f hevensy_static_files')
+    docker_compose('-p boilerplate down')
+    run('docker volume rm -f boilerplate_static_files')
 
-    docker_compose('-p hevensy up -d')
+    docker_compose('-p boilerplate up -d')
 
     def run_command_to_web(command):
-        run("docker exec -it hevensy_web_1 " + command)
+        run("docker exec -it boilerplate_web_1 " + command)
         # try:
         #     run("docker exec -it  $(docker ps -a --filter=\"name=_pye_web\" --format '{{.Names}}') " + command)
         # except:
@@ -111,4 +111,4 @@ def deploy():
 
         # ssh letsencrypt
 
-    run('docker kill -s HUP hevensy_nginx_1')
+    run('docker kill -s HUP boilerplate_nginx_1')

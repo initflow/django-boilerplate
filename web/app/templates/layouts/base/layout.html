@@ -18,15 +18,15 @@
         {% endblock favicon %}
 
         {% block meta %}
-            {% include "./partials/layout_meta.html" %}
+            {% include "./partials/meta.html" %}
         {% endblock meta %}
 
         {% block preloaded_styles %}
-            {% include "./partials/layout_preloaded_styles.html" %}
+            {% include "./partials/head_styles.html" %}
         {% endblock preloaded_styles %}
 
         {% block analytics_head %}
-            {% include "./partials/layout_analytics_head.html" %}
+            {% include "./partials/analytics_head.html" %}
         {% endblock analytics_head %}
 
         {% render_block "css" %}
@@ -36,7 +36,7 @@
         {% cms_toolbar %}
 
         {% block analytics_body %}
-            {% include "./partials/layout_analytics_body.html" %}
+            {% include "./partials/analytics_body.html" %}
         {% endblock analytics_body %}
 
         <section class="content-placeholder">
@@ -50,7 +50,7 @@
                 <section class="layout-global">
                     <section class="layout-global__header">
                         {% block header %}
-                            {% include "common/header/header.html" %}
+                            {% include "./partials/header/header.html" %}
                         {% endblock header %}
                     </section>
                     <main class="layout-global__main">

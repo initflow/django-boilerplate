@@ -2,7 +2,7 @@ version: '2'
 services:
   web:
     restart: always
-    image: registry.gitlab.com/initflow/hevensy/web/web:latest
+    image: registry.gitlab.com/initflow/boilerplate/web/web:latest
     expose:
       - "8000"
     links:
@@ -16,7 +16,7 @@ services:
 
   nginx:
     restart: always
-    image: registry.gitlab.com/initflow/hevensy/web/nginx:latest
+    image: registry.gitlab.com/initflow/boilerplate/web/nginx:latest
     ports:
     - "80:80"
     - "443:443"
