@@ -6,10 +6,9 @@ import config from '../../../config';
 export default Vue.component('common-header', {
     delimiters: config.vue.delimiters,
     data: () => ({
-        headerData: 'I`m header data!',
+        example: 'common-header data example',
     }),
     mounted() {
-        console.log(this.stateValue, this.testValue);
     },
     computed: mapState({
         stateValue: state => state.value,

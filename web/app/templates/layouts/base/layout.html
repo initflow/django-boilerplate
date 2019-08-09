@@ -1,17 +1,21 @@
 {% load cms_tags menu_tags sekizai_tags %}
 {% load render_bundle from webpack_loader %}
 {% page_attribute "page_title" as title %}
-{% page_attribute "meta_description" as description %}
+
 <!doctype html>
 <html>
     <head>
-        {% if title|length > 0 %}
-            <title>{{title}} | New Holland</title>
-        {% else %}
-            <title>{% block title %}{% endblock title %}</title>
-        {% endif %}
+        {% block title %}
+            {% if title and title|length > 0 %}
+                <title>{{ title }} | Project Title</title>
+            {% else %}
+                <title>Project Title</title>
+            {% endif %}
+        {% endblock title %}
 
-        <link rel="icon" type="image/png" href="https://nh-radio-static-assets.s3.eu-north-1.amazonaws.com/images/favicon.png">
+        {% block favicon %}
+            <link rel="icon" type="image/png" href="https://nh-radio-static-assets.s3.eu-north-1.amazonaws.com/images/favicon.png">
+        {% endblock favicon %}
 
         {% block meta %}
             {% include "./partials/layout_meta.html" %}
@@ -21,15 +25,20 @@
             {% include "./partials/layout_preloaded_styles.html" %}
         {% endblock preloaded_styles %}
 
-        {% block analitics %}
-            {% include "./partials/layout_analitics.html" %}
-        {% endblock analitics %}
+        {% block analytics_head %}
+            {% include "./partials/layout_analytics_head.html" %}
+        {% endblock analytics_head %}
 
         {% render_block "css" %}
         {% render_bundle 'main' 'css' %}
     </head>
     <body>
         {% cms_toolbar %}
+
+        {% block analytics_body %}
+            {% include "./partials/layout_analytics_body.html" %}
+        {% endblock analytics_body %}
+
         <section class="content-placeholder">
             <div class="content-placeholder__loader">
             </div>
