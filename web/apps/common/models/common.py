@@ -9,11 +9,17 @@ from django.db import models
 @python_2_unicode_compatible
 class TextCKEditor(CMSPlugin):
     text = HTMLField(configuration='CKEDITOR_SETTINGS_DEFAULT')
+    def __str__(self):
+        return self.text
     
 @python_2_unicode_compatible
 class TextParagraph(CMSPlugin):
     text = models.TextField(null=False, blank=False, max_length=5000)
+    def __str__(self):
+        return self.text
     
 @python_2_unicode_compatible
 class TextPlain(CMSPlugin):
     text = models.TextField(null=False, blank=False, max_length=5000)
+    def __str__(self):
+        return self.text
