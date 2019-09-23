@@ -6,6 +6,9 @@
                 "targets": "> 0.25%, not dead"
             }
         ],
+        [
+            "@vue/babel-preset-jsx"
+        ],
     ],
     "plugins": [
         ["@babel/plugin-proposal-decorators", { "legacy": true }],
