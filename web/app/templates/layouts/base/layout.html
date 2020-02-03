@@ -6,15 +6,14 @@
 <html>
     <head>
         {% block title %}
-            {% if title and title|length > 0 %}
-                <title>{{ title }} | Project Title</title>
-            {% else %}
-                <title>Project Title</title>
-            {% endif %}
+            <title>django_boilerplate</title>
         {% endblock title %}
 
         {% block favicon %}
-            <link rel="icon" type="image/png" href="https://nh-radio-static-assets.s3.eu-north-1.amazonaws.com/images/favicon.png">
+            <link href="https://nh-radio-static-assets.s3.eu-north-1.amazonaws.com/images/favicon.png"
+                rel="icon"
+                type="image/png"
+            >
         {% endblock favicon %}
 
         {% block meta %}
@@ -29,8 +28,12 @@
             {% include "./partials/analytics_head.html" %}
         {% endblock analytics_head %}
 
+        {% block seo_head %}
+        {% endblock seo_head %}
+
         {% render_block "css" %}
-        {% render_bundle 'main' 'css' %}
+        {% render_bundle 'chunk-vendors' 'css' %}
+        {% render_bundle 'app' 'css' %}
     </head>
     <body>
         {% cms_toolbar %}
@@ -39,38 +42,50 @@
             {% include "./partials/analytics_body.html" %}
         {% endblock analytics_body %}
 
-        <section class="content-placeholder">
+        {% block seo_body %}
+        {% endblock seo_body %}
+
+        <section class="content-placeholder"
+            id="content-placeholder"
+            >
             <div class="content-placeholder__loader">
             </div>
         </section>
-        <section data-app class="wrapper"
-            v-cloak
+
+        <div class="app-wrapper"
+            id="app"
+            is-admin="{% if request.user.is_superuser %}true{% else %}false{% endif %}"
             >
-            <layout-global inline-template>
-                <section class="layout-global">
-                    <section class="layout-global__header">
-                        {% block header %}
-                            {% include "./partials/header/header.html" %}
-                        {% endblock header %}
-                    </section>
-                    <main class="layout-global__main">
-                        {% block content %}
-                            {% placeholder "content" %}
-                        {% endblock content %}
-                        <div>
-                            Icons test: <span class="icon icon-close"></span>
-                        </div>
-                    </main>
-                </section>
-            </layout-global>
-        </section>
+            <app-root inline-template>
+                <layout-default inline-template>
+                    <div class="layout-default">
+                        <section class="layout-default__header">
+                            {% block header %}
+                                {% include "../../common/header/header.html" %}
+                            {% endblock header %}
+                        </section>
+                        <section class="layout-default__main">
+                            {% static_placeholder 'head' %}
+                            {% block content %}
+                                {% placeholder "content" %}
+                            {% endblock content %}
+                            {% block other %}{% endblock other %}
+                        </section>
+                        <section class="layout-default__footer">
+                            {% block footer %}
+                                {% include "../../common/footer/footer.html" %}
+                            {% endblock footer %}
+                        </section>
+                        <modal-root>
+                        </modal-root>
+                    </div>
+                </layout-default>
+            </app-root>
+        </div>
+
         {% csrf_token %}
-
-        {% block special_js %}
-            {% placeholder "special_js" %}
-        {% endblock special_js %}
-
         {% render_block "js" %}
-        {% render_bundle 'main' 'js' %}
+        {% render_bundle 'chunk-vendors' 'js' %}
+        {% render_bundle 'app' 'js' %}
     </body>
 </html>

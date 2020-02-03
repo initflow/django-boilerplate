@@ -212,6 +212,14 @@ WEBPACK_LOADER = {
         'IGNORE': ['.+\.hot-update.js', '.+\.map']
     }
 }
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'CACHE': not DEBUG,
+        'BUNDLE_DIR_NAME': 'assets/dist/',
+        'STATS_FILE': os.path.join(BASE_DIR,
+                                   'app/webpack-stats-live.json' if not DEBUG else 'app/webpack-stats.json'),
+    }
+}
 
 if DEBUG:
     CMS_PAGE_CACHE = False
