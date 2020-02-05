@@ -16,9 +16,9 @@ def return_page(request, page, context):
 
 def handler404(request):
     context = {}
-    return return_page(request, 'common/error_404.html',context)
+    return return_page(request, 'common/error_404.html', context)
 
 
 def handler500(request):
     context = {}
-    return return_page(request, 'common/error_500.html',context)
+    return return_page(request, 'common/error_500.html', context)

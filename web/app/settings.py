@@ -77,6 +77,7 @@ INSTALLED_APPS = [
 
     # Apps
     'apps.core',
+    'apps.common',
 ]
 
 MIDDLEWARE = [
@@ -211,6 +212,14 @@ WEBPACK_LOADER = {
         'IGNORE': ['.+\.hot-update.js', '.+\.map']
     }
 }
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'CACHE': not DEBUG,
+        'BUNDLE_DIR_NAME': 'assets/dist/',
+        'STATS_FILE': os.path.join(BASE_DIR,
+                                   'app/webpack-stats-live.json' if not DEBUG else 'app/webpack-stats.json'),
+    }
+}
 
 if DEBUG:
     CMS_PAGE_CACHE = False
@@ -235,7 +244,7 @@ TIME_ZONE = 'Europe/Moscow'
 
 RADIO_CO_URL = 'https://s3.radio.co/s1f26345be/listen'
 
-CKEDITOR_SETTINGS = {
+CKEDITOR_SETTINGS_DEFAULT = {
     'language': '{{ language }}',
     'forcePasteAsPlainText': 'true',
     'toolbar_CMS': [
@@ -245,32 +254,6 @@ CKEDITOR_SETTINGS = {
         ['Source', 'ShowBlocks']
     ],
     'format_tags': 'p;h2;h3;div',
-}
-
-CKEDITOR_SETTINGS_MIN = {
-    'toolbar_HTMLField': [
-        ['Undo', 'Redo'],
-        ['Bold', 'Italic', 'Underline'],
-        ['RemoveFormat']
-    ]
-}
-
-CKEDITOR_SETTINGS_MIN_WITH_LINKS = {
-    'toolbar_HTMLField': [
-        ['Undo', 'Redo'],
-        ['Bold', 'Italic', 'Underline'],
-        ['RemoveFormat'],
-        [ 'Link', 'Unlink', 'Anchor' ],
-    ]
-}
-
-CKEDITOR_SETTINGS_HIGHLIGHT = {
-    'toolbar_HTMLField': [
-        ['Undo', 'Redo'],
-        ['TextColor', 'BGColor'],
-        ['RemoveFormat']
-        # ['Bold', 'Italic', 'Underline'],
-    ]
 }
 
 FILE_UPLOAD_PERMISSIONS = 0o644

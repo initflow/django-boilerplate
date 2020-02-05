@@ -1,0 +1,19 @@
+.transition-fade() {
+    &.fade-enter-active, &.fade-leave-active {
+        transition: opacity @duration-fast ease-in-out;
+    }
+    &.fade-enter, &.fade-leave-to {
+        opacity: 0;
+    }
+}
+
+.transition-scale-fade() {
+    &.scale-fade-enter-active, &.scale-fade-leave-active {
+        transition: opacity @duration-fast ease-in-out, transform @duration-fast ease-in-out;
+    }
+    &.scale-fade-enter, &.scale-fade-leave-to {
+        opacity: 0;
+
+        transform: scale(0.75);
+    }
+}

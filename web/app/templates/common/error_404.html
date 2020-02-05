@@ -1,4 +1,10 @@
-<div class="error">
-        <div class="error__title">Error</div>
-        <div class="error__code">404</div>
+{% extends '/layouts/base/base_layout.html' %}
+{% load cms_tags sekizai_tags staticfiles %}
+{% block title %}404{% endblock title %}
+
+{% block content %}
+    <div class="page-error">
+        <div class="page-error__title">Error</div>
+        <div class="page-error__code">404</div>
     </div>
+{% endblock content %}

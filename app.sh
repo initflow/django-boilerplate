@@ -18,7 +18,7 @@ rundocker() {
     docker stop $(docker ps -a -q)
     echo ''
     echo 'Start containers'
-    docker-compose -p hevensy up -d
+    docker-compose -p boilerplate up -d
     echo ''
 }
 
@@ -77,7 +77,7 @@ sync_database() {
 
 
 get_container_name() {
-   docker ps -a --filter="name=hevensy_$1" --format '{{.Names}}'
+   docker ps -a --filter="name=boilerplate_$1" --format '{{.Names}}'
 }
 
 
@@ -110,8 +110,8 @@ first_run() {
 
 update() {
    echo 'Build containers with cache'
-   docker-compose -p hevensy build worker
-   docker-compose -p hevensy build web
+   docker-compose -p boilerplate build worker
+   docker-compose -p boilerplate build web
 }
 
 
@@ -119,8 +119,8 @@ update() {
 
 build() {
    echo 'Build containers'
-   docker-compose -p hevensy build worker --no-cache
-   docker-compose -p hevensy build --no-cache
+   docker-compose -p boilerplate build worker --no-cache
+   docker-compose -p boilerplate build --no-cache
 }
 
 
