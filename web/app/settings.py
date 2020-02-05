@@ -78,6 +78,7 @@ INSTALLED_APPS = [
     # Apps
     'apps.core',
     'apps.common',
+    'apps.plugins',
 ]
 
 MIDDLEWARE = [

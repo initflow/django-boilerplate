@@ -10,26 +10,18 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style scoped lang="less">
 @import '~theme';
 
 .layout-default {
-    flex: 1 1 auto;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    &__header {
-        flex: 0 0 auto;
-    }
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto;
     &__main {
-        flex: 1 0 auto;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
         align-items: stretch;
-    }
-    &__footer {
-        flex: 0 0 auto;
     }
 }
 </style>
