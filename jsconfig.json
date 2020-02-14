@@ -1,0 +1,18 @@
+{
+    "checkJs": true,
+    "allowJs": true,
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "~/*": [
+                "./web/app/src/*"
+            ]
+        }
+    },
+    "include": [
+        "./web/app/src/**/*"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}
