@@ -68,6 +68,7 @@ INSTALLED_APPS = [
     'rest_framework_filters',
     'adminsortable2',
     'multimenus',
+    'colorfield',
 
     'easy_thumbnails',
     'filer',

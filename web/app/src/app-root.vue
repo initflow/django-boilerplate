@@ -17,6 +17,7 @@ export default {
     },
     mounted() {
         document.querySelector('#content-placeholder').classList.add('_disabled');
+        this.$store.dispatch('user/getUser');
         this.$store.dispatch('callbacks/execute');
     },
     watch: {
@@ -54,7 +55,7 @@ export default {
 html {
     height: 100%;
 
-    color: @color-text-main;
+    color: @color-gray-darkest;
     font-family: 'Open Sans', sans-serif;
     font-size: 10px;
     line-height: 1;
@@ -85,7 +86,7 @@ body {
 }
 .app-wrapper {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: 100%;
     grid-template-rows: 1fr;
     width: 100%;
     min-height: 100%;

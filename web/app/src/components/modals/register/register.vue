@@ -40,7 +40,7 @@
         </form>
         <label class="modal-register__subscribe">
             <div class="modal-register__subscribe-checkbox">
-                <ui-input-checkbox
+                <ui-input-base-checkbox
                     v-model="needSubscribe"
                 />
             </div>
@@ -294,7 +294,7 @@ export default {
         text-align: center;
     }
     &__switch {
-        color: @color-accent;
+        color: @color-primary-main;
         font-size: 1.2rem;
         text-align: center;
         text-decoration: underline;
@@ -345,7 +345,7 @@ export default {
             margin-bottom: 15px;
 
             font-size: 1.2rem;
-            color: @color-text-support;
+            color: @color-gray-dark;
             text-align: center;
         }
         &-list {

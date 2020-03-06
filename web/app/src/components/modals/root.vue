@@ -118,7 +118,7 @@ export default {
         bottom: 0;
         left: 0;
 
-        background-color: fade(@color-main, 25%);
+        background-color: fade(@color-gray-darkest, 25%);
     }
     &__item {
         .transition-scale-fade();

@@ -20,7 +20,7 @@ export default {
         width: 180px;
         padding: 60px;
 
-        background-color: @color-background;
+        background-color: @color-gray-lightest;
 
     }
     @media @media-md-down {

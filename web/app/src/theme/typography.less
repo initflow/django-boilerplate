@@ -1,32 +1,40 @@
-.typography-extra-large() {
-    font-size: 4.8rem;
+.typography-display-xl() {
+    font-size: 5.4rem;
+    line-height: 5.6rem;
     font-weight: bold;
-    line-height: 5.4rem;
 }
-.typography-large() {
+.typography-display-md() {
     font-size: 2.8rem;
+    line-height: 3.6rem;
     font-weight: bold;
-    line-height: 3.2rem;
 }
-.typography-medium() {
-    font-size: 2.4rem;
-    font-weight: bold;
-    line-height: 2.8rem;
-}
-.typography-small() {
+.typography-display-sm() {
     font-size: 2rem;
     line-height: 2.8rem;
-}
-.typography-heading() {
-    font-size: 1.6rem;
     font-weight: bold;
+}
+
+.typography-body-lg() {
+    font-size: 1.6rem;
     line-height: 2.4rem;
 }
-.typography-body() {
-    font-size: 1.4rem;
-    line-height: 2.2rem;
+.typography-body-md() {
+    font-size: 1.3rem;
+    line-height: 2rem;
 }
-.typography-caption() {
-    font-size: 1.2rem;
-    line-height: 1.6rem;
+.typography-body-md-list() {
+    .typography-body-md();
+
+    line-height: 4rem;
+}
+.typography-body-md-caps() {
+    .typography-body-md();
+
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.typography-caption-md() {
+    font-size: 1.1rem;
+    line-height: 1.8rem;
 }

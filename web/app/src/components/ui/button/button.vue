@@ -4,10 +4,9 @@
         v-bind:type="type ? type : null"
         v-on:click="$emit('click')"
         v-bind:class="{
-                _accented: isAccented,
-                _rarefied: isRarefied,
+                _accented: isAccented && !isDisabled,
+                _bordered: isBordered,
                 _disabled: isDisabled,
-                _solid: isSolid,
             }"
         >
         <slot />
@@ -22,7 +21,7 @@ export default {
             type: Boolean,
             default: false,
         },
-        isRarefied: {
+        isBordered: {
             type: Boolean,
             default: false,
         },
@@ -30,13 +29,9 @@ export default {
             type: Boolean,
             default: false,
         },
-        isSolid: {
-            type: Boolean,
-            default: false,
-        },
         type: {
             type: String,
-            default: null,
+            default: 'button',
         },
     },
     computed: {
@@ -54,84 +49,53 @@ export default {
 @import '~theme';
 
 .ui-button {
+    .typography-body-md-caps();
+
+    flex: 1 1 auto;
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: 100%;
-    padding: 5px 10px;
+    padding: 12px 22px;
 
-    color: @color-text-main;
-    font-weight: 600;
-    letter-spacing: 0.1rem;
-    line-height: 1.4;
+    color: @color-gray-lightest;
+    font-weight: bold;
     text-align: center;
-    text-transform: uppercase;
+
+    background-color: @color-gray-darkest;
 
     cursor: pointer;
-    box-shadow: inset 0 0 0 1px @color-main;
     user-select: none;
 
-    transition-property: box-shadow;
+    transition-property: opacity;
     transition-duration: @duration-fast;
     transition-timing-function: @easing-default;
-
-    &:hover {
-        box-shadow: inset 0 0 0 5px @color-main;
+    &:active,
+    &:focus {
+        opacity: 0.8;
     }
-
     &._accented {
-        color: @color-text-accent;
-
-        box-shadow: inset 0 0 0 1px @color-accent;
-
-        &:hover {
-            box-shadow: inset 0 0 0 5px @color-accent;
-        }
+        background-color: @color-primary-main;
     }
+    &._disabled {
+        color: @color-gray-dark;
 
-    &._rarefied {
-        letter-spacing: 0.18rem;
-    }
-    &._disabled,
-    &._disabled:hover {
-        color: @color-text-support;
+        background-color: @color-gray-main;
 
-        cursor: auto;
         pointer-events: none;
-        box-shadow: inset 0 0 0 1px @color-background-support;
     }
-    &._solid {
-        color: @color-text-inverted;
-        text-transform: none;
-        letter-spacing: 0;
-        font-weight: normal;
+    &._bordered {
+        color: @color-gray-darkest;
 
-        background: @color-main;
+        background-color: rgba(0, 0, 0, 0);
 
-        box-shadow: inset 0 0 0 0 @color-background;
-
-        &:hover {
-            box-shadow: inset 0 0 0 5px @color-background;
+        box-shadow: inset 0 0 0 1px currentColor;
+        &._disabled {
+            color: @color-gray-main;
         }
-    }
-    &._solid._accented {
-        color: @color-text-inverted;
-
-        background: @color-accent;
-
-        box-shadow: inset 0 0 0 0 @color-background;
-
-        &:hover {
-            box-shadow: inset 0 0 0 5px @color-background;
+        &._accented {
+            color: @color-primary-main;
         }
-    }
-    &._solid._disabled {
-        color: @color-text-support;
-
-        background: @color-background-support;
-
-        box-shadow: inset 0 0 0 0 @color-background;
     }
 }
 </style>

@@ -3,3 +3,18 @@
         Header
     </header>
 </common-header>
+
+{% load multimenus %}
+{% load multimenus %}
+                {% show_multi_menu "FOOTER_MENU" "/common/footer/partials/menu_items.html" %}
+
+{% for item in items %}
+    <div class="common-footer__left-menu-main-item">
+        <a class="common-footer__left-menu-main-item-link"
+            href="{{ item|get_multimenu_field_url }}"
+            {% if item.target %} target="{{ item.target }}"{% endif %}
+            >
+            {{ item.name }}
+        </a>
+    </div>
+{% endfor %}

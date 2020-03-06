@@ -1,22 +1,22 @@
 <template>
     <div>
-        plugin-separator
+        plugin-common-separator
     </div>
 </template>
 
 <script>
 export default {
-    name: 'plugin-separator',
+    name: 'plugin-common-separator',
 };
 </script>
 
 <style scoped lang="less">
 @import '~theme';
 
-.plugin-separator {
+.plugin-common-separator {
     width: 100%;
     height: 1px;
 
-    background-color: @color-background-support;
+    background-color: @color-gray-light;
 }
 </style>
