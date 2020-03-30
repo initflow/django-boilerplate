@@ -3,38 +3,41 @@
         <div class="ui-form-field__headline">
             <label class="ui-form-field__headline-label"
                 v-if="model.label"
-                v-bind:class="{ _invalid: isInvalid }"
                 v-text="model.label + (model.label && isRequired ? '*' : '')"
                 >
             </label>
-            <div class="ui-form-field__headline-right">
-                <div class="ui-form-field__headline-right-hint"
-                    v-if="hint"
-                    >
-                    <a class="ui-form-field__headline-right-hint-link"
-                        v-if="hint === 'recovery'"
-                        href="#"
-                        v-text="'Не помню пароль, помогите!'"
-                    />
-                </div>
-                <div class="ui-form-field__headline-right-error"
-                    v-if="error && isInvalid"
-                    v-text="error"
-                />
-            </div>
         </div>
         <div class="ui-form-field__input">
             <component v-bind:is="input"
                 v-bind:model="model"
                 v-bind:value="value"
                 v-bind:is-invalid="isInvalid"
-                v-on:input="inputHandler"
+                v-on="getHandler(model.type)"
             />
+                <!-- v-on:input="updateHandler" -->
+        </div>
+        <div class="ui-form-field__botline">
+            <div class="ui-form-field__botline-error"
+                v-if="error && isInvalid"
+                v-text="error"
+            />
+            <div class="ui-form-field__botline-hint"
+                v-if="hint"
+                >
+                <template v-if="hint === 'recovery'">
+                    <a class="ui-form-field__botline-hint-link"
+                        v-bind:href="passwordResetHref"
+                        v-text="'Забыли пароль?'"
+                    /> ↗
+                </template>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
+import config from '~/config';
+
 export default {
     name: 'ui-form-field',
     props: {
@@ -57,11 +60,11 @@ export default {
     computed: {
         input() {
             let component = 'ui-input-text';
-            if (this.model.type === 'email') {
-                component = 'ui-input-email';
-            }
-            if (this.model.type === 'checkbox') {
-                component = 'ui-input-checkbox';
+            if (this.model.type === 'email' ||
+                this.model.type === 'phone' ||
+                this.model.type === 'checkbox' ||
+                this.model.type === 'select') {
+                component = `ui-input-${this.model.type}`;
             }
             return component;
         },
@@ -83,16 +86,31 @@ export default {
             }
             return this.model.hint;
         },
+        passwordResetHref() {
+            return config.urls.passwordReset;
+        },
         error() {
-            if (!this.model.error) {
+            if (!this.model.errors || !this.validation) {
                 return null;
             }
-            return this.model.error;
+            const errorKeys = Object.keys(this.validation).filter(x => x.substring(0, 1) !== '$').filter(x => !this.validation[x]);
+            const validErrorKey = errorKeys.find(x => this.model.errors[x] !== undefined);
+            if (validErrorKey !== undefined) {
+                return this.model.errors[validErrorKey];
+            }
+            return null;
         },
     },
     methods: {
-        inputHandler(newValue) {
-            this.$emit('input', newValue);
+        getHandler(type) {
+            if (type === 'select' || type === 'checkbox') {
+                return { change: this.updateHandler };
+            } else {
+                return { input: this.updateHandler };
+            }
+        },
+        updateHandler(newValue) {
+            this.$emit('update', newValue);
         },
     },
 };
@@ -108,33 +126,23 @@ export default {
         justify-content: space-between;
         &-label {
             display: block;
-            margin-bottom: 8px;
-
-            transition: color @duration-fast @easing-default;
-            &._invalid {
-                color: @color-primary-main;
-            }
         }
-        &-right {
-            .typography-caption-md();
-
-            text-align: right;
-            &-hint {
-                margin-bottom: 10px;
-
-                color: @color-gray-dark;
-                &-link {
+    }
+    &__botline {
+        text-align: right;
+        &-hint {
+            padding-top: 5px;
+            &-link {
+                text-decoration: underline;
+                &:hover {
                     text-decoration: none;
-                    &:hover {
-                        text-decoration: underline;
-                    }
                 }
             }
-            &-error {
-                margin-bottom: 10px;
+        }
+        &-error {
+            margin-bottom: 10px;
 
-                color: @color-primary-main;
-            }
+            color: @color-accent-warm;
         }
     }
     @media  @media-md-down {

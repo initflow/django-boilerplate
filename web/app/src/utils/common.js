@@ -153,10 +153,26 @@ export const getDeclension = (number, wordForms) => {
     return wordForms[2];
 };
 
+export const getObjectValueByPath = (objToSearh = {}, path = '', forceNewObject = false) => {
+    let obj = forceNewObject ? JSON.parse(JSON.stringify(objToSearh)) : objToSearh;
+    if (!path || path === '.') {
+        return obj;
+    }
+    for (var i = 0, levels = path.split('.'); i < levels.length; i++) {
+        const nextLevel = obj[levels[i]];
+        if (nextLevel === undefined) {
+            return undefined;
+        }
+        obj = nextLevel;
+    };
+    return obj;
+};
+
 export default {
     injectResize,
     getCSRFToken,
     getDeclension,
+    getObjectValueByPath,
     toggleFullscreen,
     updateDjangoScriptTags,
     updateDjangoTamplateTags,

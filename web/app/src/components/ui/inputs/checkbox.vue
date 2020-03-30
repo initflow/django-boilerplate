@@ -14,8 +14,8 @@
             v-bind:id="labelId"
             >
             <div class="ui-input-checkbox__right-error"
-                v-if="model.error && isInvalid"
-                v-text="model.error"
+                v-if="error && isInvalid"
+                v-text="error"
             />
             <div class="ui-input-checkbox__right-label"
                 v-if="$slots.default"
@@ -38,9 +38,9 @@ export default {
             type: Object,
             default: () => ({}),
         },
-        isInvalid: {
-            type: Boolean,
-            default: false,
+        validation: {
+            type: Object,
+            default: null,
         },
         value: {
             type: Boolean,
@@ -54,6 +54,23 @@ export default {
     computed: {
         labelId() {
             return 'label-' + this.model.name;
+        },
+        isInvalid() {
+            if (this.validation === null || this.validation === undefined) {
+                return false;
+            }
+            return this.validation.$dirty && this.validation.$invalid;
+        },
+        error() {
+            if (!this.model.errors || !this.validation) {
+                return null;
+            }
+            const errorKeys = Object.keys(this.validation).filter(x => x.substring(0, 1) !== '$').filter(x => !this.validation[x]);
+            const validErrorKey = errorKeys.find(x => this.model.errors[x] !== undefined);
+            if (validErrorKey !== undefined) {
+                return this.model.errors[validErrorKey];
+            }
+            return null;
         },
     },
     methods: {

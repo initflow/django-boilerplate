@@ -10,7 +10,8 @@
         v-bind:autofocus="isAutofocus"
         v-on:focus="focusHandler"
         v-on:blur="blurHandler"
-        v-on:input="inputHandler"
+        v-on="handler"
+        ref="input"
     />
 </template>
 
@@ -50,6 +51,14 @@ export default {
             type: Function,
             default: null,
         },
+        errors: {
+            type: Object,
+            default: null,
+        },
+        isLazy: {
+            type: Boolean,
+            dafault: false,
+        },
     },
     model: {
         prop: 'value',
@@ -58,6 +67,14 @@ export default {
     data: () => ({
         isFocused: false,
     }),
+    computed: {
+        handler() {
+            if (this.isLazy) {
+                return { change: this.inputHandler };
+            }
+            return { input: this.inputHandler };
+        },
+    },
     methods: {
         focusHandler(e) {
             if (this.onFocus !== null) {
@@ -77,6 +94,11 @@ export default {
             }
             this.$emit('input', e.target.value);
         },
+    },
+    mounted() {
+        if (this.isAutofocus) {
+            this.$refs.input.focus();
+        }
     },
 };
 </script>

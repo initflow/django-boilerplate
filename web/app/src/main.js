@@ -1,5 +1,6 @@
 /* eslint-disable new-cap */
 import Vue from 'vue';
+import Vuelidate from 'vuelidate';
 import store from './store';
 import utils from './utils';
 import SvgIcon from 'vue-svgicon';
@@ -14,6 +15,7 @@ Vue.use(SvgIcon, {
     defaultWidth: '1em',
     defaultHeight: '1em',
 });
+Vue.use(Vuelidate);
 
 // Глобальная регистрация vue-компонентов
 const requireComponent = require.context(

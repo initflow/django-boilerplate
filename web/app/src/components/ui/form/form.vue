@@ -12,7 +12,7 @@
                     v-bind:model="field"
                     v-bind:validation="getFieldValidation(key)"
                     v-bind:value="field.value"
-                    v-on:input="(val) => modelUpdate(val, key)"
+                    v-on:update="val => modelUpdate(val, key)"
                 />
             </div>
         </div>
