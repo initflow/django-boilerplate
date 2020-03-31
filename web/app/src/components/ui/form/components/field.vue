@@ -142,7 +142,7 @@ export default {
         &-error {
             margin-bottom: 10px;
 
-            color: @color-accent-warm;
+            color: @color-primary-main;
         }
     }
     @media  @media-md-down {

@@ -177,10 +177,10 @@ export default {
             box-shadow: inset 0 0 0 1px @color-gray-darkest, 0 0 0 2px @color-gray-darkest;
         }
         ._invalid > & {
-            box-shadow: inset 0 0 0 1px @color-accent-warm;
+            box-shadow: inset 0 0 0 1px @color-primary-main;
         }
         ._focused._invalid > & {
-            box-shadow: inset 0 0 0 1px @color-accent-warm, 0 0 0 2px @color-accent-warm;
+            box-shadow: inset 0 0 0 1px @color-primary-main, 0 0 0 2px @color-primary-main;
         }
         &-option {
             user-select: none;
