@@ -18,6 +18,21 @@ export const email = {
     value: '',
     error: 'Введите корректный email',
 };
+
+export const phone = {
+    name: 'phone',
+    label: 'Телефон',
+    type: 'phone',
+    autocomplete: 'tel',
+    strictPhoneCheck: false,
+    placeholder: '+7',
+    value: '',
+    errors: {
+        required: 'Введите номер в формате +70000000000',
+        minLength: 'Введите номер в формате +70000000000',
+    },
+};
+
 export const password = {
     name: 'password',
     label: 'Пароль',

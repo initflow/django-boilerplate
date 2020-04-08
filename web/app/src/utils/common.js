@@ -168,11 +168,27 @@ export const getObjectValueByPath = (objToSearh = {}, path = '', forceNewObject 
     return obj;
 };
 
+export const parseUrl = (url) => {
+    const searchIndex = url.indexOf('?');
+    if (searchIndex < 0) {
+        return [];
+    }
+    const search = url.substring(searchIndex + 1);
+    const queries = search.split('&');
+    const result = [];
+    queries.forEach(q => {
+        const [ query, value ] = q.split('=');
+        result.push({ title: query, value });
+    });
+    return result;
+};
+
 export default {
     injectResize,
     getCSRFToken,
     getDeclension,
     getObjectValueByPath,
+    parseUrl,
     toggleFullscreen,
     updateDjangoScriptTags,
     updateDjangoTamplateTags,
