@@ -29,7 +29,7 @@ export default {
     display: block;
     width: 100%;
     padding-bottom: 100%;
-    color: @color-background;
+    color: @color-gray-lightest;
     &:after {
         content: " ";
 
@@ -49,10 +49,10 @@ export default {
         animation: loader 1.2s linear infinite;
     }
     &._gray {
-        color: @color-background-support;
+        color: @color-gray-light;
     }
     &._accent {
-        color: @color-accent;
+        color: @color-primary-main;
     }
 }
 @keyframes loader {

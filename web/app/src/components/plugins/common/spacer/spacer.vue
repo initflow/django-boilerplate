@@ -1,9 +1,9 @@
 <template>
-    <div class="plugin-spacer">
-        <div class="plugin-spacer__desktop"
+    <div class="plugin-common-spacer">
+        <div class="plugin-common-spacer__desktop"
             v-bind:style="this.baseStyles"
         />
-        <div class="plugin-spacer__mobile"
+        <div class="plugin-common-spacer__mobile"
             v-bind:style="this.mobileStyles"
         />
     </div>
@@ -11,7 +11,7 @@
 
 <script>
 export default {
-    name: 'plugin-spacer',
+    name: 'plugin-common-spacer',
     props: {
         base: {
             type: Number,
@@ -42,7 +42,7 @@ export default {
 <style lang="less">
 @import '~theme';
 
-.plugin-spacer {
+.plugin-common-spacer {
     pointer-events: none;
     &__desktop {
         display: block;

@@ -26,6 +26,11 @@ const mutations = {
         state.list = state.list.concat([itemToAdd]);
     },
     pop(state) {
+        const length = state.list.length;
+        const onClose = state.list[length - 1].props.onClose;
+        if (onClose !== undefined) {
+            onClose();
+        }
         state.list = state.list.slice(0, state.list.length - 1);
     },
 };

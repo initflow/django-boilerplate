@@ -1,0 +1,11 @@
+{% load cms_tags %}
+
+<plugin-common-separator inline-template>
+    <div class="plugin-common-separator"
+        style="
+            {% if instance.color|length > 0 %}background-color: {{ instance.color }};{% endif %}
+            {% if instance.size > 1 %}height: {{ instance.size }}px;{% endif %}
+        "
+        >
+    </div>
+</plugin-common-separator>

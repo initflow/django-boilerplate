@@ -6,22 +6,44 @@
 <html>
     <head>
         {% block title %}
-            <title>django_boilerplate</title>
+            {% if title %}
+                <title>{{ title }} | django_boilerplate</title>
+            {% else %}
+                <title>django_boilerplate</title>
+            {% endif %}
         {% endblock title %}
 
         {% block favicon %}
-            <link href="https://nh-radio-static-assets.s3.eu-north-1.amazonaws.com/images/favicon.png"
+            <link href="https://s3.eu-north-1.amazonaws.com/pye-media/static_files/images/favicon.png"
                 rel="icon"
                 type="image/png"
             >
         {% endblock favicon %}
 
         {% block meta %}
-            {% include "./partials/meta.html" %}
+            {% block description %}
+                {% if description %}
+                    <meta name="description" content="{{ description }}">
+                {% else %}
+                    <meta name="description" content="Pimp Your Eyes">
+                {% endif %}
+            {% endblock description %}
+            <meta name="viewport" content="width=device-width,initial-scale=1">
+            <meta name="title" content="{{ title }}" />
         {% endblock meta %}
 
+        {% block og %}
+            <meta property="og:title" content="{{ title }}" />
+            <meta property="og:type" content="website" />
+            <meta property="og:site_name" content="P.Y.E" />
+            <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+            {% if request.current_page.imageextension %}
+                <meta property="og:image" content="{{ request.current_page.imageextension.image.url }}" />
+            {% endif %}
+        {% endblock og %}
+
         {% block preloaded_styles %}
-            {% include "./partials/head_styles.html" %}
+            {% include "./partials/styles.html" %}
         {% endblock preloaded_styles %}
 
         {% block analytics_head %}
@@ -32,8 +54,8 @@
         {% endblock seo_head %}
 
         {% render_block "css" %}
-        {% render_bundle 'chunk-vendors' 'css' %}
-        {% render_bundle 'app' 'css' %}
+        {% render_bundle "chunk-vendors" "css" %}
+        {% render_bundle "app" "css" %}
     </head>
     <body>
         {% cms_toolbar %}
@@ -42,8 +64,10 @@
             {% include "./partials/analytics_body.html" %}
         {% endblock analytics_body %}
 
-        {% block seo_body %}
-        {% endblock seo_body %}
+        <section class="seo-body">
+            {% block seo_body %}
+            {% endblock seo_body %}
+        </section>
 
         <section class="content-placeholder"
             id="content-placeholder"

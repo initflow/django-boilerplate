@@ -17,6 +17,7 @@ export default {
     },
     mounted() {
         document.querySelector('#content-placeholder').classList.add('_disabled');
+        this.$store.dispatch('user/getUser');
         this.$store.dispatch('callbacks/execute');
     },
     watch: {
@@ -48,13 +49,13 @@ export default {
 *:after {
     box-sizing: border-box;
 }
-
 [v-cloak] {
     display: none !important;
 }
-
 html {
-    color: @color-text-main;
+    height: 100%;
+
+    color: @color-gray-darkest;
     font-family: 'Open Sans', sans-serif;
     font-size: 10px;
     line-height: 1;
@@ -66,12 +67,10 @@ html {
 }
 body {
     position: static;
-    margin: 0;
 
-    display: flex;
-    flex-direction: column;
     width: 100%;
-    min-height: 100vh;
+    height: 100%;
+    margin: 0;
     overflow-y: scroll;
     scroll-behavior: smooth;
     &._fixed {
@@ -86,10 +85,11 @@ body {
     }
 }
 .app-wrapper {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 1fr;
     width: 100%;
-    min-height: 100vh;
+    min-height: 100%;
 }
 .content-placeholder._disabled {
     pointer-events: none;

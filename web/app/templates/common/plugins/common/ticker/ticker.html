@@ -1,0 +1,10 @@
+<plugin-common-ticker
+    v-bind="{
+        text: '{{ instance.text }}',
+        speed: {{ instance.speed }},
+        {% if instance.href %}href: '{{ instance.href }}',{% endif %}
+        {% if instance.color %}color: '{{ instance.color }}',{% endif %}
+        {% if instance.background_color %}backgroundColor: '{{ instance.background_color }}',{% endif %}
+    }"
+    >
+</plugin-common-ticker>

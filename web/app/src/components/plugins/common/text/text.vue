@@ -6,7 +6,7 @@
 
 <script>
 export default {
-    name: 'plugin-text',
+    name: 'plugin-common-text',
 };
 </script>
 

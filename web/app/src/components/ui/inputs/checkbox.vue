@@ -1,15 +1,32 @@
 <template>
     <label class="ui-input-checkbox"
-        v-bind:class="{
-            _active: checked
-        }"
+        v-bind:aria-checked="value"
+        role="checkbox"
+        v-bind:aria-labelledby="labelId"
         >
-        <input class="ui-input-checkbox__input"
-            type="checkbox"
-            v-bind:checked="checked"
-            v-on:change="updateModel($event.target.checked)"
-        />
-        <div class="ui-input-checkbox__check" />
+        <div class="ui-input-checkbox__input">
+            <ui-input-base-checkbox
+                v-bind:value="model.value"
+                v-on:change="updateValue"
+            />
+        </div>
+        <div class="ui-input-checkbox__right"
+            v-bind:id="labelId"
+            >
+            <div class="ui-input-checkbox__right-error"
+                v-if="error && isInvalid"
+                v-text="error"
+            />
+            <div class="ui-input-checkbox__right-label"
+                v-if="$slots.default"
+                >
+                <slot />
+            </div>
+            <div class="ui-input-checkbox__right-label"
+                v-else-if="model.label"
+                v-text="model.label"
+            />
+        </div>
     </label>
 </template>
 
@@ -17,18 +34,48 @@
 export default {
     name: 'ui-input-checkbox',
     props: {
-        checked: {
+        model: {
+            type: Object,
+            default: () => ({}),
+        },
+        validation: {
+            type: Object,
+            default: null,
+        },
+        value: {
             type: Boolean,
             default: false,
         },
     },
     model: {
-        prop: 'checked',
+        prop: 'value',
         event: 'change',
     },
+    computed: {
+        labelId() {
+            return 'label-' + this.model.name;
+        },
+        isInvalid() {
+            if (this.validation === null || this.validation === undefined) {
+                return false;
+            }
+            return this.validation.$dirty && this.validation.$invalid;
+        },
+        error() {
+            if (!this.model.errors || !this.validation) {
+                return null;
+            }
+            const errorKeys = Object.keys(this.validation).filter(x => x.substring(0, 1) !== '$').filter(x => !this.validation[x]);
+            const validErrorKey = errorKeys.find(x => this.model.errors[x] !== undefined);
+            if (validErrorKey !== undefined) {
+                return this.model.errors[validErrorKey];
+            }
+            return null;
+        },
+    },
     methods: {
-        updateModel(newValue) {
-            this.$emit('change', newValue);
+        updateValue(value) {
+            this.$emit('change', value);
         },
     },
 };
@@ -38,45 +85,33 @@ export default {
 @import "~theme";
 
 .ui-input-checkbox {
-    position: relative;
-
-    display: block;
-    width: 15px;
-    height: 15px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
 
     cursor: pointer;
-    user-select: none;
-    box-shadow: inset 0 0 0 2px @color-background-support;
-
-    transition-property: box-shadow;
-    transition-duration: @duration-fast;
-    transition-timing-function: ease-in-out;
-    &._active {
-        box-shadow: inset 0 0 0 2px @color-accent;
-    }
     &__input {
-        position: absolute;
-        top: 0;
-        left: 0;
-
-        opacity: 0;
-        visibility: hidden;
-        appearance: none;
+        flex: 0 0 auto;
+        margin-right: 10px;
     }
-    &__check {
-        position: absolute;
-        top: 5px;
-        left: 5px;
-        width: 5px;
-        height: 5px;
+    &__right {
+        .typography-caption-md();
 
-        background-color: @color-accent;
+        flex: 1 1 auto;
+        margin-top: -1px;
+        &-error {
+            margin-bottom: 6px;
 
-        opacity: 0;
-
-        transition: opacity @duration-fast ease-in-out;
-        ._active & {
-            opacity: 1;
+            color: @color-primary-main;
+        }
+        &-label {
+            /deep/ a {
+                text-decoration: none;
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
         }
     }
 }

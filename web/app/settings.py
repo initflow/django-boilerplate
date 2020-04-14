@@ -68,6 +68,7 @@ INSTALLED_APPS = [
     'rest_framework_filters',
     'adminsortable2',
     'multimenus',
+    'colorfield',
 
     'easy_thumbnails',
     'filer',
@@ -78,6 +79,7 @@ INSTALLED_APPS = [
     # Apps
     'apps.core',
     'apps.common',
+    'apps.plugins',
 ]
 
 MIDDLEWARE = [
@@ -202,16 +204,16 @@ CMS_TEMPLATES = (
 
 SITE_ID = 1
 
-WEBPACK_LOADER = {
-    'DEFAULT': {
-        'CACHE': not DEBUG,
-        'BUNDLE_DIR_NAME': 'assets/dist/',
-        'STATS_FILE': os.path.join(BASE_DIR, 'app/webpack-stats-live.json' if not DEBUG else 'app/webpack-stats.json'),
-        'POLL_INTERVAL': 0.1,
-        'TIMEOUT': None,
-        'IGNORE': ['.+\.hot-update.js', '.+\.map']
-    }
-}
+# WEBPACK_LOADER = {
+#     'DEFAULT': {
+#         'CACHE': not DEBUG,
+#         'BUNDLE_DIR_NAME': 'assets/dist/',
+#         'STATS_FILE': os.path.join(BASE_DIR, 'app/webpack-stats-live.json' if not DEBUG else 'app/webpack-stats.json'),
+#         'POLL_INTERVAL': 0.1,
+#         'TIMEOUT': None,
+#         'IGNORE': ['.+\.hot-update.js', '.+\.map']
+#     }
+# }
 WEBPACK_LOADER = {
     'DEFAULT': {
         'CACHE': not DEBUG,
