@@ -1,4 +1,4 @@
-Django==1.11.16
+Django==1.11.29
 django-rest-swagger==2.2.0
 djangorestframework==3.8.2
 gunicorn==19.3.0
