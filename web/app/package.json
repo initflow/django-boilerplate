@@ -15,7 +15,7 @@
         "core-js": "^3.4.4",
         "moment": "^2.24.0",
         "normalize.css": "^8.0.1",
-        "swiper": "^5.3.0",
+        "swiper": "^6.5.1",
         "vue": "^2.6.10",
         "vue-icon-font": "^1.0.4",
         "vuelidate": "^0.7.5",
